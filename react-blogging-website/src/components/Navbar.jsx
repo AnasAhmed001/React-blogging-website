@@ -15,7 +15,7 @@ const Navbar = () => {
   }
   return (
     <>
-      <div className='d-flex justify-content-center gap-5 m-5'>
+      <div> 
         <h5><Link to=''>Home</Link></h5>
         <h5><Link to='dashboard'>Dashboard</Link></h5>
         <h5><Link to='profile'>profile</Link></h5>
