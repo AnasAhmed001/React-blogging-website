@@ -46,9 +46,10 @@ const Dashboard = () => {
   }
   return (
     <>
-    <div>
-      <h1 >Dashboard</h1>
+    <div className='flex justify-center'>
+      <h1>Dashboard</h1>
     </div>  
+    <div className='flex justify-center'>
       <form onSubmit={handleSubmit(sendDatatoFirestore)}>
         <input type="text" placeholder='title' {...register("title", { required: true })} /> <br />
         {errors.title && <span>This field is required</span>}
@@ -56,17 +57,18 @@ const Dashboard = () => {
         <textarea placeholder='enter description' {...register("description", { required: true })} ></textarea> <br /><br />
         {errors.description && <span>This field is required</span>}
 
-        <button type='submit'>add Blog</button>
+        <button type='submit' className="btn btn-primary">Primary</button>
       </form>
+    </div>  
 
       <h1>User Blogs</h1>
-      <div className='rounded-md'>
+      <div>
         {blogs.length > 0 ? blogs.map((item, index) => {
           return <div key={index}>
             <h1>{item.title}</h1>
             <p>{item.description}</p>
           </div>
-        }) : <h1>No blogs found</h1>}
+        }) : <span className="loading loading-spinner text-primary"></span>}
       </div>
     </>
   )
