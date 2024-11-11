@@ -37,7 +37,7 @@ const Register = () => {
     <h1>Register</h1>
 </div>
 
-<label className="input input-bordered flex items-center gap-2 mt-11">
+<label className="input input-bordered flex items-center gap-2 mt-11 ml-80 mr-80 mt-5">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 16 16"
@@ -50,7 +50,7 @@ const Register = () => {
   </svg>
   <input type="email" className="grow" placeholder="Email" ref={email} />
 </label>
-<label className="input input-bordered flex items-center gap-2">
+<label className="input input-bordered flex items-center gap-2 ml-80 mr-80 mt-5">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 16 16"
@@ -61,7 +61,7 @@ const Register = () => {
   </svg>
   <input type="text" className="grow" placeholder="Full Name" ref={fullName}/>
 </label>
-<label className="input input-bordered flex items-center gap-2">
+<label className="input input-bordered flex items-center gap-2 ml-80 mr-80 mt-5">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 16 16"

@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
+import { getAllData } from '../config/firebase/firebasemethods';
 
 
 const Home = () => {
 
-  const [GetAllData, setGetAllData] = useState([]);
+  const [blogs, setBlogs] = useState([]);
 
-  const GetDataFromFireStore = async(data)=> {
-    console.log(data);
-    try{
-      const response = await getAllData("blogs")
-    }catch(error){
-      console.log(error);
-      
-    }
+  const renderBlogs = async () => {
     
-  }
+    try {
+      const data = await getAllData('blogs'); 
+      setBlogs(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 
 
