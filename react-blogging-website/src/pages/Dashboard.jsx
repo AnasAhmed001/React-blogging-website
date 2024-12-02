@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { auth, db, sendData } from "../Config/firebase/firebaseconfigmethodes";
+import { auth, db, sendData } from "../config/firebase/firebaseconfigmethodes";
 import { Link } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";

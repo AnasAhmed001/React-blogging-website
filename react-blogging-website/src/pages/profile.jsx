@@ -1,6 +1,6 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
-import { auth, db } from '../Config/firebase/firebaseconfigmethodes';
+import { auth, db } from '../config/firebase/firebaseconfigmethodes';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const Profile = () => {

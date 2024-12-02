@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { signUpUser, uploadImage } from '../Config/firebase/firebaseconfigmethodes'
+import { signUpUser, uploadImage } from '../config/firebase/firebaseconfigmethodes'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { CircularProgress, fabClasses } from '@mui/material'

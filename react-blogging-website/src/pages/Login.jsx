@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useForm } from "react-hook-form"
-import { loginUser } from '../Config/firebase/firebaseconfigmethodes'
+import { loginUser } from '../config/firebase/firebaseconfigmethodes'
 import Swal from 'sweetalert2'
 import { CircularProgress } from '@mui/material'
 

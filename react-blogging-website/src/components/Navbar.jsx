@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { auth, db, signOutUser } from '../Config/firebase/firebaseconfigmethodes';
+import { auth, db, signOutUser } from '../config/firebase/firebaseconfigmethodes';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Swal from 'sweetalert2';
 
