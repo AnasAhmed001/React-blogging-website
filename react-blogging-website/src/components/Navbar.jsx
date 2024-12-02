@@ -1,58 +1,96 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { signOutUser } from '../config/firebase/firebasemethods'
+import { onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { auth, db, signOutUser } from '../Config/firebase/firebaseconfigmethodes';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
+  let navigate = useNavigate();
+  const currentPage = useLocation();
+  const [Data, setData] = useState([]);
 
-  // useNavigate
-  const navigate = useNavigate()
-
-  const logoutUser = async () => {
-    const user = await signOutUser();
-    
-    console.log(user);
-    navigate('login')
+  // logout user
+  function userLogout() {
+    console.log('logout');
+    Swal.fire({
+      title: 'Success!',
+      text: 'You are logged out successfully',
+      icon: 'success',
+      confirmButtonText: 'Logout',
+      confirmButtonColor: '#234e94'
+    });
+    signOutUser();
+    setData([]);
+    console.log('User logged out.');
+    navigate('/login');
   }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const q = query(collection(db, "users"), where("id", "==", user.uid));
+        const querySnapshot = await getDocs(q);
+        const userData = [];
+        querySnapshot.forEach((doc) => {
+          userData.push(doc.data());
+        });
+        setData(userData);
+      }
+    });
+    return () => unsubscribe(); // Clean up subscription
+  }, []);
+
   return (
     <>
-<div className="navbar bg-base-100">
-  <div className="navbar-start">
-    <div className="dropdown">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h16M4 18h7" />
-        </svg>
+      <div className="navbar bg-blue-700">
+        <div className="flex-1 justify-center">
+          <a className="btn btn-ghost text-4xl text-white">Blogging App</a>
+        </div>
+        <div className="flex-none gap-2">
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img
+                  alt="no img"
+                  src={Data.length > 0 && Data[0].profileImage ? Data[0].profileImage : 'https://www.shutterstock.com/image-vector/avatar-gender-neutral-silhouette-vector-600nw-2470054311.jpg'}
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              {auth.currentUser ? (
+                <>
+                  {currentPage.pathname === '/Dashboard' ? (
+                    <>
+                      <li className='text-center'><Link to='/'>Home</Link></li>
+                      <li className='text-center'><button onClick={userLogout}>Logout</button></li>
+                    </>
+                  ) : currentPage.pathname === '/' ? (
+                    <>
+                      <li className='text-center'><Link to='Profile'>Profile</Link></li>
+                      <li className='text-center'><Link to='Dashboard'>Dashboard</Link></li>
+                      <li className='text-center'><button onClick={userLogout}>Logout</button></li>
+                    </>
+                  ) : currentPage.pathname === '/Profile' ? (
+                    <>
+                      <li className='text-center'><Link to='/'>Home</Link></li>
+                      <li className='text-center'><Link to='Dashboard'>Dashboard</Link></li>
+                      <li className='text-center'><button onClick={userLogout}>Logout</button></li>
+                    </>
+                  ) : null}
+                </>
+              ) : (
+                // If user is not logged in
+                <li className='text-center'><Link to='Login'>Login</Link></li>
+              )}
+            </ul>
+          </div>
+        </div>
       </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-        <li> <Link to=''>Homepage</Link></li>
-        <li> <Link to = 'dashboard'>Dashboard</Link></li>
-        <li> <Link to='profile'>Profile</Link></li>
-        <li> <Link to='login'>Login</Link></li>
-        <li> <Link to='register'>Register</Link></li>
-      </ul>
-    </div>
-  </div>
-  <div className="navbar-center">
-    <a className="btn btn-ghost text-3xl font-bold">Blogging App</a>
-  </div>
-  <div className="navbar-end">
-   <button className="btn btn-primary" onClick={logoutUser}>Logout</button>
-    
-  </div>
-</div>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

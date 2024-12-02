@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout.jsx';
 import Login from './pages/Login.jsx';
 import Dashboard from './pages/Dashboard.jsx';
-import SingleUser from './pages/SingleUser.jsx';
+
 import Profile from './pages/profile.jsx';
 import Register from './pages/Register.jsx';
 import Home from './pages/Home.jsx';
@@ -35,10 +35,6 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <ProtectedRoutes component={<Dashboard/>}/>
-      },
-      {
-        path: 'user',
-        element: <ProtectedRoutes component={<SingleUser/>}/>
       },
     ]
   }
